@@ -1,0 +1,23 @@
+name: Lint
+
+on: push
+
+jobs:
+  run-linters:
+    name: Run linters
+    runs-on: [self-hosted, Linux, X64, internet]
+
+    steps:
+      - name: Check out Git repository
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: 15.x
+
+      - name: Install Node.js dependencies
+        run: npm ci
+
+      - name: Check format (prettier)
+        run: npm run check
