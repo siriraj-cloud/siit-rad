@@ -1,4 +1,4 @@
-export type TStudyTabRes1 = {
+export interface TStudyTabRes1 {
   StudyKey: number;
   HN: string;
   PNAME: string | null;
@@ -25,4 +25,8 @@ export type TStudyTabRes1 = {
   Clinic: string | null;
   ChargeType: string | null;
   Charge: number | null;
-};
+}
+
+export interface TStudyTabRes2 extends TStudyTabRes1 {
+  InspectraURL: string | null;
+}

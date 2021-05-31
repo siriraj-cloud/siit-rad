@@ -1,7 +1,11 @@
-import { TStudyTabRes1 } from "./type-report";
+import { TStudyTabRes1, TStudyTabRes2 } from "./type-report";
+// import { TStudyTabRes2 } from "./type-report"
 
 type PrepareRadReportProps = { record: TStudyTabRes1[]; UserType: string };
-export function prepareReport({ record: r, UserType }: PrepareRadReportProps) {
+export function prepareReport({
+  record: r,
+  UserType,
+}: PrepareRadReportProps): TStudyTabRes1[] {
   let tmp: TStudyTabRes1[] = [];
   r.forEach((e) => {
     // * Add timezone +0700
@@ -30,23 +34,30 @@ export function prepareReport({ record: r, UserType }: PrepareRadReportProps) {
     } else if (UserType === "Rad") {
       tmp.push(e);
     }
-
-    // TODO Inspectra URL
   });
 
-  tmp.sort((a, b) => {
-    const aDate = a.StudyDate
-      ? new Date(a.StudyDate).getTime()
-      : a.InsertDate
-      ? new Date(a.InsertDate).getTime()
-      : 0;
-    const bDate = b.StudyDate
-      ? new Date(b.StudyDate).getTime()
-      : b.InsertDate
-      ? new Date(b.InsertDate).getTime()
-      : 0;
-    return bDate - aDate;
-  });
+  tmp.sort(sortDate);
 
   return tmp;
+}
+
+// function addInspectra(r: TStudyTabRes1[]) {
+//   let tmp: TStudyTabRes2[] = []
+//   r.forEach((e) => {
+
+//   })
+// }
+
+function sortDate(a: TStudyTabRes1, b: TStudyTabRes1) {
+  const aDate = a.StudyDate
+    ? new Date(a.StudyDate).getTime()
+    : a.InsertDate
+    ? new Date(a.InsertDate).getTime()
+    : 0;
+  const bDate = b.StudyDate
+    ? new Date(b.StudyDate).getTime()
+    : b.InsertDate
+    ? new Date(b.InsertDate).getTime()
+    : 0;
+  return bDate - aDate;
 }

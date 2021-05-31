@@ -13,6 +13,9 @@ const config = {
     ALLOW_METHODS: "GET,HEAD,PUT,PATCH,POST,DELETE",
     ALLOW_HEADERS: "Origin, X-Requested-With, Content-Type, Accept",
   },
+  inspectra: {
+    jwtExpire: 1 * HOUR_s,
+  },
 };
 export default config;
 

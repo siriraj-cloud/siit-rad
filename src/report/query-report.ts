@@ -1,19 +1,26 @@
 import sql from "mssql";
 import { db37PacsCon, db37PacsPool } from "../db-conn/db-radiology";
 import { trimStringTStudyTab1 } from "../fn";
+import { inspectraInsertObject } from "./inspectra-insert";
 import { prepareReport } from "./report-prepare";
-import { TStudyTabRes1 } from "./type-report";
+import { TStudyTabRes1, TStudyTabRes2 } from "./type-report";
 
 type QueryRadReportRes =
   | {
       code: "OK";
-      payload: TStudyTabRes1[];
+      payload: TStudyTabRes2[];
     }
   | { code: "NOT_FOUND" }
   | { code: "ERROR"; message: string };
-type QueryRadReportProps = { hn: string };
+type QueryRadReportProps = {
+  hn: string;
+  userInfo: UserShortInfo;
+  requestFrom: string | undefined;
+};
 export async function queryRadReport({
   hn,
+  userInfo,
+  requestFrom,
 }: QueryRadReportProps): Promise<QueryRadReportRes> {
   try {
     await db37PacsCon;
@@ -23,8 +30,13 @@ export async function queryRadReport({
       .query(queryStr);
     if (query && query.rowsAffected[0] > 0) {
       const trim = trimStringTStudyTab1(query.recordset);
-      const prepare = prepareReport({ record: trim, UserType: "" });
-      return { code: "OK", payload: trim };
+      const prepare1 = prepareReport({ record: trim, UserType: "" });
+      const prepareInspectra = await inspectraInsertObject({
+        record: prepare1,
+        userInfo,
+        requestFrom,
+      });
+      return { code: "OK", payload: prepareInspectra };
     } else {
       return { code: "NOT_FOUND" };
     }
@@ -34,24 +46,12 @@ export async function queryRadReport({
   }
 }
 
-/* 
-
-export function trimStringTStudyTab1(o: TStudyTabRes1[]): TStudyTabRes1[] {
-  let tmp: TStudyTabRes1[] = [];
-  o.forEach((e: any) => {
-    (Object.keys(e) as (keyof TStudyTabRes1)[]).map(
-      (k: keyof TStudyTabRes1) =>
-        (e[k] =
-          e[k] && typeof e[k] === "string"
-            ? (e[k] as string).trim()
-            : (e[k] as string)),
-    );
-    tmp.push(e);
-  });
-  return tmp;
-}
-
-*/
+export type UserShortInfo = {
+  AccountName: string;
+  fullName: string;
+  displayName: string;
+  location: string[];
+};
 
 const queryStr = `SELECT 
   StudyKey,

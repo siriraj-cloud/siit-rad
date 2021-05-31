@@ -44,7 +44,7 @@ export async function authMiddleware(
     return;
   }
 
-  // console.log(req.cookie);
+  // console.log(req.headers.origin, req.headers.referer, req.headers.host);
 
   const cookieID: string = req.cookies[CONFIG.cookie.client_cookie_name] || "";
   if (!cookieID)

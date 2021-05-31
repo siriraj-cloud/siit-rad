@@ -1,4 +1,4 @@
-import { queryRadReport } from "./query-report";
+import { queryRadReport, UserShortInfo } from "./query-report";
 import { Request, Response } from "express";
 import { TStudyTabRes1 } from "./type-report";
 
@@ -16,8 +16,22 @@ export async function getRadReport(
   res: Response<RadReportRes>,
 ): Promise<Response<RadReportRes>> {
   const { hn } = req.params;
+  if (!req.userInfo)
+    return res.status(401).json({ status: 401, message: "Login required" });
+  const { AccountName, fullName, displayName, location } = req.userInfo;
+  const userInfo: UserShortInfo = {
+    AccountName,
+    fullName,
+    displayName,
+    location,
+  };
+  const { origin, host, referer } = req.headers;
 
-  const queryReport = await queryRadReport({ hn });
+  const queryReport = await queryRadReport({
+    hn,
+    userInfo,
+    requestFrom: origin || referer || host,
+  });
 
   if (queryReport.code === "NOT_FOUND")
     return res.status(404).json({ status: 404 });
