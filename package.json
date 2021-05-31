@@ -7,7 +7,20 @@
     "test": "test"
   },
   "scripts": {
-    "test": "jest"
+    "installclean": "rm -rf node_modules/ && rm package-lock.json && npm install ad && npm install",
+    "installdev": "rm -rf node_modules/ && npm install ad && npm install",
+    "installprod": "rm -rf node_modules/ && npm install ad && npm install --only=production",
+    "check": "prettier --check \"{src,test}/**/*.{js,jsx,json,md,ts,tsx,html,css}\"",
+    "format": "prettier --write \"{src,test}/**/*.{js,jsx,json,md,ts,tsx,html,css}\"",
+    "dev": "nodemon",
+    "build": "rm -rf dist/ && tsc -p .",
+    "start": "npm run build && node dist/index.js",
+    "startprod": "node dist/index.js",
+    "test": "jest",
+    "testunit": "jest --testPathIgnorePatterns=.*integration.*",
+    "testwatch": "jest --watchAll",
+    "testunitwatch": "jest --watchAll --testPathIgnorePatterns=.*integration.*",
+    "testwatchcov": "jest --watchAll --coverage"
   },
   "repository": {
     "type": "git",
