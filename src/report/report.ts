@@ -1,16 +1,21 @@
-import { queryRadReport, UserShortInfo } from "./query-report";
 import { Request, Response } from "express";
-import { TStudyTabRes1 } from "./type-report";
+import { queryRadReport, UserShortInfo } from "./query-report";
+import { TStudyTabRes2 } from "./type-report";
 
-// GET  /radreport/:hn
+/**
+ * Original ref.
+ * Used in siit-f "src/pages/RadReport/type-rad-report.ts"
+ */
+
 type RadReportRes =
   | {
       status: 200;
-      payload: TStudyTabRes1[];
+      payload: TStudyTabRes2[];
     }
   | { status: 404 }
   | { status: 400 | 401 | 500; message: string };
 
+// GET  /radreport/:hn
 export async function getRadReport(
   req: Request<RadReportProps>,
   res: Response<RadReportRes>,

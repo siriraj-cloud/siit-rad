@@ -1,6 +1,7 @@
 import cookieParser from "cookie-parser";
 import cors from "cors";
 import express, { Application, Request, Response } from "express";
+import { getRadAppointment } from "./appointment/appointment";
 import { authMiddleware } from "./middleware/auth";
 import { getRadReport } from "./report/report";
 import { corsConfig } from "./utils/config-cors";
@@ -15,7 +16,8 @@ app.use(cookieParser());
 /* istanbul ignore next */
 if (process.env.CORS_PROTECT_BY_ORIGIN === "on") app.use(cors(corsConfig));
 
-app.get("/radreport/:hn", authMiddleware, getRadReport); // TODO: Auth middleware
+app.get("/radreport/:hn", authMiddleware, getRadReport);
+app.get("/radSchedule/:hn", authMiddleware, getRadAppointment);
 
 /**
  * Health check
