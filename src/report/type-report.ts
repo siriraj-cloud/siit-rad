@@ -1,3 +1,7 @@
+/**
+ * Original ref.
+ * Used in siit-f "src/pages/RadReport/type-rad-report.ts"
+ */
 export interface TStudyTabRes1 {
   StudyKey: number;
   HN: string;
@@ -7,12 +11,12 @@ export interface TStudyTabRes1 {
   Modality: string | null;
   Bodypart: string | null;
   Room: string | null;
-  StudyDate: Date | null;
+  StudyDate: string | null; // ISO8601 Format
   PatAge: string | null;
-  InsertDate: string | null;
+  InsertDate: string | null; // ISO8601 Format
   ExamStatus: number | null;
   Comments: string | null;
-  VerifyTime: Date | null;
+  VerifyTime: string | null; // ISO8601 Format
   Dept: string | null;
   ReportDate: string | null;
   ReportTime: string | null;
@@ -20,7 +24,7 @@ export interface TStudyTabRes1 {
   ReportDoctor: string | null;
   VerifyDoctor: string | null;
   PStatus: string | null;
-  ReportDT: Date | null;
+  ReportDT: string | null; // ISO8601 Format
   Amount: number | null;
   Clinic: string | null;
   ChargeType: string | null;
