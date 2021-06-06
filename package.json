@@ -41,6 +41,7 @@
     "mssql": "^7.1.0",
     "pg": "^8.6.0",
     "pg-hstore": "^2.3.3",
+    "redis": "^3.1.2",
     "sequelize": "^6.6.2"
   },
   "devDependencies": {
@@ -50,14 +51,15 @@
     "@types/jest": "^26.0.23",
     "@types/jsonwebtoken": "^8.5.1",
     "@types/mssql": "^6.0.8",
-    "@types/node": "^15.6.1",
+    "@types/node": "^15.12.1",
+    "@types/redis": "^2.8.29",
     "@types/supertest": "^2.0.11",
-    "jest": "^27.0.1",
+    "jest": "^27.0.4",
     "nodemon": "^2.0.7",
-    "prettier": "^2.3.0",
+    "prettier": "^2.3.1",
     "sequelize-auto": "^0.8.3",
     "supertest": "^6.1.3",
-    "ts-jest": "^27.0.1",
+    "ts-jest": "^27.0.2",
     "ts-node": "^10.0.0",
     "typescript": "^4.3.2"
   }
