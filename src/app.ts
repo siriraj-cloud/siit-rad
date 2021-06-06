@@ -1,6 +1,7 @@
 import cookieParser from "cookie-parser";
 import cors from "cors";
 import express, { Application, Request, Response } from "express";
+import { getRadAllery } from "./allergy/allergy";
 import { getRadAppointment } from "./appointment/appointment";
 import { authMiddleware } from "./middleware/auth";
 import { getRadReport } from "./report/report";
@@ -18,6 +19,7 @@ if (process.env.CORS_PROTECT_BY_ORIGIN === "on") app.use(cors(corsConfig));
 
 app.get("/radreport/:hn", authMiddleware, getRadReport);
 app.get("/radSchedule/:hn", authMiddleware, getRadAppointment);
+app.get("/radAllergy/:hn", authMiddleware, getRadAllery);
 
 /**
  * Health check

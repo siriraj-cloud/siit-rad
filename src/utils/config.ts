@@ -16,6 +16,12 @@ const config = {
   inspectra: {
     jwtExpire: 1 * HOUR_s,
   },
+  Allergy: {
+    redis: {
+      table_list_key: "siradsiit-rad-allergy-table:",
+      expire_s: 8 * HOUR_s,
+    },
+  },
 };
 export default config;
 

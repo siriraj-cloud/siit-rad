@@ -6,7 +6,6 @@ import { TStudyTabRes2 } from "./type-report";
  * Original ref.
  * Used in siit-f "src/pages/RadReport/type-rad-report.ts"
  */
-
 type RadReportRes =
   | {
       status: 200;
@@ -17,7 +16,7 @@ type RadReportRes =
 
 // GET  /radreport/:hn
 export async function getRadReport(
-  req: Request<RadReportProps>,
+  req: Request<{ hn: string }>,
   res: Response<RadReportRes>,
 ): Promise<Response<RadReportRes>> {
   const { hn } = req.params;
@@ -46,5 +45,3 @@ export async function getRadReport(
 
   return res.status(200).json({ status: 200, payload: queryReport.payload });
 }
-
-type RadReportProps = { hn: string };

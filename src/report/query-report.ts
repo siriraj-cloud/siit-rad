@@ -1,6 +1,6 @@
 import sql from "mssql";
 import { db37PacsCon, db37PacsPool } from "../db-conn/db-radiology";
-import { trimStringTStudyTab1 } from "../fn";
+import { trimStringGeneric } from "../utils/fn-trim";
 import { inspectraInsertObject } from "./inspectra-insert";
 import { prepareReport } from "./report-prepare";
 import { TStudyTabRes1, TStudyTabRes2 } from "./type-report";
@@ -29,7 +29,7 @@ export async function queryRadReport({
       .input("hn", sql.VarChar, hn)
       .query(queryStr);
     if (query && query.rowsAffected[0] > 0) {
-      const trim = trimStringTStudyTab1(query.recordset);
+      const trim = trimStringGeneric<TStudyTabRes1>(query.recordset);
       const prepare1 = prepareReport({ record: trim, UserType: "" });
       const prepareInspectra = await inspectraInsertObject({
         record: prepare1,
