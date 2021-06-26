@@ -16,11 +16,13 @@
     "build": "rm -rf dist/ && tsc -p .",
     "start": "npm run build && node dist/index.js",
     "startprod": "node dist/index.js",
-    "test": "jest",
+    "test": "jest --forceExit",
     "testunit": "jest --testPathIgnorePatterns=.*integration.*",
     "testwatch": "jest --watchAll",
     "testunitwatch": "jest --watchAll --testPathIgnorePatterns=.*integration.*",
-    "testwatchcov": "jest --watchAll --coverage"
+    "testwatchcov": "jest --watchAll --coverage",
+    "killport": "sudo kill -9 $(sudo lsof -t -i:5035)",
+    "killjest": "kill -9 $(ps ax | grep \"sh -c jest\")"
   },
   "repository": {
     "type": "git",

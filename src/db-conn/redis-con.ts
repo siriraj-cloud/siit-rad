@@ -51,6 +51,17 @@ const redisDelAsync: {
 
 /*  */
 
+export async function redisEnd() {
+  await new Promise<void>((resolve) => {
+    redisClient.quit(() => {
+      resolve();
+    });
+  });
+  await new Promise((resolve) => setImmediate(resolve));
+}
+
+/*  */
+
 export { redisGetAsync, redisSetAsync, redisTtlAsync, redisDelAsync };
 
 if (
