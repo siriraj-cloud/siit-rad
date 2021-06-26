@@ -71,9 +71,9 @@ jobs:
           DB_RAD_37_USERNAME: sa
           DB_RAD_37_PASSWORD: Sa123******password
           # TODO
-          DB_RAD_37_DATABASE_TSTUDYTAB: CIDatabase213
+          DB_RAD_37_DATABASE_TSTUDYTAB: TStudyTabCI
           DB_RAD_37_DATABASE_TSTUDYTAB_SCHEMA: dbo
-          DB_RAD_37_DATABASE_APPOINTMENT: CIDatabase213
+          DB_RAD_37_DATABASE_APPOINTMENT: AppointmentCI
           DB_RAD_37_DATABASE_APPOINTMENT_SCHEMA: dbo
 
           DB_INSPECTRA_HOST: localhost
