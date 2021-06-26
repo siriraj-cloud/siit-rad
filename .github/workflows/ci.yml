@@ -15,10 +15,10 @@ jobs:
       mssql:
         image: mcr.microsoft.com/mssql/server:2017-latest
         env:
-          ACCEPT_EULA: "Y"
-          SA_PASSWORD: "Sa123******password"
-          MSSQL_PID: "Developer"
-          TZ: "Asia/Bangkok"
+          ACCEPT_EULA: Y
+          SA_PASSWORD: Sa123******password
+          MSSQL_PID: Developer
+          TZ: Asia/Bangkok
         ports:
           - 1434:1433
 
@@ -61,6 +61,18 @@ jobs:
       - run: npm ci
       - run: npm run build
 
+      # Mock database on CI process
+      - run: npm run testcimock
+        env:
+          DB_RAD_37_IP: localhost
+          DB_RAD_37_PORT: 1434
+          DB_RAD_37_USERNAME: sa
+          DB_RAD_37_PASSWORD: Sa123******password
+          DB_RAD_37_DATABASE_TSTUDYTAB: TStudyTabCI
+          DB_RAD_37_DATABASE_TSTUDYTAB_SCHEMA: dbo
+          DB_RAD_37_DATABASE_APPOINTMENT: AppointmentCI
+          DB_RAD_37_DATABASE_APPOINTMENT_SCHEMA: dbo
+
       - run: npm test
         env:
           NODE_PORT: 5092
@@ -70,7 +82,6 @@ jobs:
           DB_RAD_37_PORT: 1434
           DB_RAD_37_USERNAME: sa
           DB_RAD_37_PASSWORD: Sa123******password
-          # TODO
           DB_RAD_37_DATABASE_TSTUDYTAB: TStudyTabCI
           DB_RAD_37_DATABASE_TSTUDYTAB_SCHEMA: dbo
           DB_RAD_37_DATABASE_APPOINTMENT: AppointmentCI

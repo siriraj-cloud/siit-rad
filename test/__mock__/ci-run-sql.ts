@@ -20,7 +20,7 @@ const pool1 = new sql.ConnectionPool({
 
 const pool1_conn = pool1.connect();
 
-export async function runCIDatabase() {
+(async function runCIDatabase() {
   try {
     await pool1_conn;
     const request = pool1.request();
@@ -32,4 +32,4 @@ export async function runCIDatabase() {
   } catch (err) {
     console.error("SQL error", err);
   }
-}
+})();

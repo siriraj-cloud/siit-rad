@@ -22,7 +22,8 @@
     "testunitwatch": "jest --watchAll --testPathIgnorePatterns=.*integration.*",
     "testwatchcov": "jest --watchAll --coverage",
     "killport": "sudo kill -9 $(sudo lsof -t -i:5035)",
-    "killjest": "kill -9 $(ps ax | grep \"sh -c jest\")"
+    "killjest": "kill -9 $(ps ax | grep \"sh -c jest\")",
+    "testcimock": "ts-node test/__mock__/ci-run-sql.ts"
   },
   "repository": {
     "type": "git",
