@@ -26,8 +26,8 @@ jobs:
           node-version: ${{ matrix.node-version }}
 
       - run: (cd ~/siit4-p/siit-rad && git pull origin main)
-      - run: (cd ~/siit4-p/siit-rad && npm ci)
+      - run: (cd ~/siit4-p/siit-rad && npm ci --silent)
       - run: (cd ~/siit4-p/siit-rad && npm run build)
       - run: (cd ~/siit4-p/siit-rad && npm run installprod)
       - run: (cd ~/siit4-p/siit-rad && pm2 delete siit4-rad || :)
-      - run: (cd ~/siit4-p/siit-rad && pm2 start dist/index.js -i 4 --name 'siit4-rad')
+      - run: (cd ~/siit4-p/siit-rad && pm2 start dist/index.js --name 'siit4-rad')
