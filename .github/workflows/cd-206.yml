@@ -1,0 +1,33 @@
+name: Continous deployment
+
+on:
+  workflow_run:
+    workflows: ["CI"]
+    branches: [main]
+    types:
+      - completed
+
+jobs:
+  cd:
+    name: Build deploy with PM2
+    runs-on: ${{ matrix.os }}
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+
+    strategy:
+      matrix:
+        os: [[self-hosted, Linux, X64, no-internet, 206]]
+        node-version: [16.x]
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - run: (cd ~/siit4-p/siit-rad && git pull origin main)
+      - run: (cd ~/siit4-p/siit-rad && npm ci)
+      - run: (cd ~/siit4-p/siit-rad && npm run build)
+      - run: (cd ~/siit4-p/siit-rad && npm run installprod)
+      - run: (cd ~/siit4-p/siit-rad && pm2 delete siit4-rad || :)
+      - run: (cd ~/siit4-p/siit-rad && pm2 start dist/index.js -i 4 --name 'siit4-rad')

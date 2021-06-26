@@ -5,7 +5,7 @@ on: push
 jobs:
   run-linters:
     name: Run linters
-    runs-on: [self-hosted, Linux, X64, internet]
+    runs-on: [self-hosted, Linux, X64]
 
     steps:
       - name: Check out Git repository
@@ -14,7 +14,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v1
         with:
-          node-version: 15.x
+          node-version: 16.x
 
       - name: Install Node.js dependencies
         run: npm ci

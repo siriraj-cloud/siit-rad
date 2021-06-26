@@ -1,0 +1,99 @@
+name: CI
+
+on:
+  push:
+    branches: [main, dev_ts]
+  pull_request:
+    branches: [main, dev_ts]
+
+jobs:
+  build:
+    name: Build
+    runs-on: ${{ matrix.os }}
+
+    services:
+      mssql:
+        image: mcr.microsoft.com/mssql/server:2017-latest
+        env:
+          ACCEPT_EULA: "Y"
+          SA_PASSWORD: "Sa123******password"
+          MSSQL_PID: "Developer"
+          TZ: "Asia/Bangkok"
+        ports:
+          - 1434:1433
+
+      redis:
+        image: redis
+        options: >-
+          --health-cmd "redis-cli ping"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 6399:6379
+
+      postgres:
+        image: postgres:latest
+        env:
+          POSTGRES_USER: root
+          POSTGRES_PASSWORD: secret
+          POSTGRES_DB: testdb_user
+        ports:
+          - 5499:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    strategy:
+      matrix:
+        os: [[self-hosted, Linux, X64, no-internet, 206]]
+        node-version: [14.x, 15.x, 16.x]
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - run: npm ci
+      - run: npm run build
+
+      - run: npm test
+        env:
+          NODE_PORT: 5092
+          AUTH_BYPASS: false
+
+          DB_RAD_37_IP: localhost
+          DB_RAD_37_PORT: 1434
+          DB_RAD_37_USERNAME: sa
+          DB_RAD_37_PASSWORD: Sa123******password
+          # TODO
+          DB_RAD_37_DATABASE_TSTUDYTAB: CIDatabase213
+          DB_RAD_37_DATABASE_TSTUDYTAB_SCHEMA: dbo
+          DB_RAD_37_DATABASE_APPOINTMENT: CIDatabase213
+          DB_RAD_37_DATABASE_APPOINTMENT_SCHEMA: dbo
+
+          DB_INSPECTRA_HOST: localhost
+          DB_INSPECTRA_PORT: 5499
+          DB_INSPECTRA_USERNAME: root
+          DB_INSPECTRA_PASSWORD: secret
+          # TODO
+          DB_INSPECTRA_DATABASE_INSPECTRA: testdb_user
+          DB_INSPECTRA_DATABASE_INSPECTRA_SCHEMA: public
+
+          INSPECTRA_URL: http://172.29.101.205:8085
+          INSPECTRA_JWT_SECRET: secret
+
+          REDIS_HOST: localhost
+          REDIS_PORT: 6399
+          REDIS_PASSWORD: ""
+
+          API_AUTH_BASEURL: http://172.29.101.205:5031
+
+          AXIOS_PROXY_ENABLE: false
+
+          CORS_ALLOW_ORIGIN: http://localhost:3000,http://localhost
+          CORS_PROTECT_BY_ORIGIN: off
