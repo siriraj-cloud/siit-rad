@@ -62,7 +62,7 @@ jobs:
       - run: npm run build
 
       # Mock database on CI process
-      - run: npm run testcimock
+      - run: npm run mockcimssql
         env:
           DB_RAD_37_IP: localhost
           DB_RAD_37_PORT: 1434
@@ -72,6 +72,16 @@ jobs:
           DB_RAD_37_DATABASE_TSTUDYTAB_SCHEMA: dbo
           DB_RAD_37_DATABASE_APPOINTMENT: AppointmentCI
           DB_RAD_37_DATABASE_APPOINTMENT_SCHEMA: dbo
+
+      # Mock database on CI process
+      - run: npm run mockcipostgres
+        env:
+          DB_INSPECTRA_HOST: localhost
+          DB_INSPECTRA_PORT: 5499
+          DB_INSPECTRA_USERNAME: root
+          DB_INSPECTRA_PASSWORD: secret
+          DB_INSPECTRA_DATABASE_INSPECTRA: testdb_user
+          DB_INSPECTRA_DATABASE_INSPECTRA_SCHEMA: public
 
       - run: npm test
         env:
@@ -91,7 +101,6 @@ jobs:
           DB_INSPECTRA_PORT: 5499
           DB_INSPECTRA_USERNAME: root
           DB_INSPECTRA_PASSWORD: secret
-          # TODO
           DB_INSPECTRA_DATABASE_INSPECTRA: testdb_user
           DB_INSPECTRA_DATABASE_INSPECTRA_SCHEMA: public
 
@@ -108,3 +117,6 @@ jobs:
 
           CORS_ALLOW_ORIGIN: http://localhost:3000,http://localhost
           CORS_PROTECT_BY_ORIGIN: off
+
+          TEST_VALID_HN_TSTUDY: 49229284
+          TEST_VALID_ACC_INSPECTRA: 24715180

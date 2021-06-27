@@ -38,9 +38,6 @@ export function inspectraURL({
     "?token=" +
     jwtString
   );
-  // }
-
-  return null;
 }
 
 function signJWT(props: SignJWTProps): string {

@@ -50,6 +50,6 @@ const pool1_conn = pool1.connect();
     await pool1.close();
     process.exit(0);
   } catch (err) {
-    console.error("SQL error", err);
+    console.error("SQL error mssql", err);
   }
 })();
