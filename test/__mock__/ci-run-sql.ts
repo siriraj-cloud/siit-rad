@@ -1,8 +1,8 @@
 // Create mock data for GitHub action
 require("dotenv").config();
 import fs from "fs";
-import path from "path";
 import sql from "mssql";
+import path from "path";
 
 const createDB = fs.readFileSync(
   path.join(__dirname, "./1-create-db.sql"),
@@ -46,8 +46,7 @@ const pool1_conn = pool1.connect();
     await request.query(createTable1 + createTable2);
     await request.query(insertPacplusmaster);
     await request.query(insertAppoint);
-
-    // Close connection
+    console.log("Insert mock data success.");
     await pool1.close();
     process.exit(0);
   } catch (err) {
