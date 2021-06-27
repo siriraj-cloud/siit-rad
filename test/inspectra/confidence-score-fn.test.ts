@@ -1,3 +1,4 @@
+require("dotenv").config();
 import { readAccessionNo } from "../../src/inspectra/confidence-score-fn";
 
 const validAcc = process.env.TEST_VALID_ACC_INSPECTRA || "00000000";

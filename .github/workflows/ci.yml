@@ -37,7 +37,7 @@ jobs:
         env:
           POSTGRES_USER: root
           POSTGRES_PASSWORD: secret
-          POSTGRES_DB: testdb_user
+          POSTGRES_DB: inspectra
         ports:
           - 5499:5432
         options: >-
@@ -80,7 +80,7 @@ jobs:
           DB_INSPECTRA_PORT: 5499
           DB_INSPECTRA_USERNAME: root
           DB_INSPECTRA_PASSWORD: secret
-          DB_INSPECTRA_DATABASE_INSPECTRA: testdb_user
+          DB_INSPECTRA_DATABASE_INSPECTRA: inspectra
           DB_INSPECTRA_DATABASE_INSPECTRA_SCHEMA: public
 
       - run: npm test
@@ -101,7 +101,7 @@ jobs:
           DB_INSPECTRA_PORT: 5499
           DB_INSPECTRA_USERNAME: root
           DB_INSPECTRA_PASSWORD: secret
-          DB_INSPECTRA_DATABASE_INSPECTRA: testdb_user
+          DB_INSPECTRA_DATABASE_INSPECTRA: inspectra
           DB_INSPECTRA_DATABASE_INSPECTRA_SCHEMA: public
 
           INSPECTRA_URL: http://172.29.101.205:8085
