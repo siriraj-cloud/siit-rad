@@ -24,7 +24,7 @@
     "killport": "sudo kill -9 $(sudo lsof -t -i:5035)",
     "killjest": "kill -9 $(ps ax | grep \"sh -c jest\")",
     "mockcimssql": "ts-node test/__mock__/ci-run-mssql.ts",
-    "mockcipostgres": "ts-node test/__mock__/ci-run-postgres.ts.ts"
+    "mockcipostgres": "ts-node test/__mock__/ci-run-postgres.ts"
   },
   "repository": {
     "type": "git",
