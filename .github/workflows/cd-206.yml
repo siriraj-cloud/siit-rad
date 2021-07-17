@@ -25,7 +25,8 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
 
-      - run: (cd ~/siit4-p/siit-rad && git pull origin main)
+      - run: (cd ~/siit4-p/siit-rad && git fetch)
+      - run: (cd ~/siit4-p/siit-rad && git reset --hard origin/main)
       - run: (cd ~/siit4-p/siit-rad && npm ci --silent)
       - run: (cd ~/siit4-p/siit-rad && npm run build)
       - run: (cd ~/siit4-p/siit-rad && npm run installprod)
