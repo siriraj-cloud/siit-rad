@@ -26,9 +26,11 @@ export async function inspectraInsertObject({
     (e) => e.accession_number_siriraj || e.accession_number || null,
   );
 
+  console.log(studyKeyInspectra);
+
   let tmp: TStudyTabRes2[] = [];
   record.forEach((e) => {
-    if (e.StudyKey !== null && studyKeyInspectra.includes(String(e.StudyKey)))
+    if (e.StudyKey !== null && studyKeyInspectra.includes(String(e.StudyKey))) {
       tmp.push({
         ...e,
         InspectraURL: inspectraURL({
@@ -40,11 +42,12 @@ export async function inspectraInsertObject({
           requestFrom: requestFrom,
         }),
       });
-
-    tmp.push({
-      ...e,
-      InspectraURL: null,
-    });
+    } else {
+      tmp.push({
+        ...e,
+        InspectraURL: null,
+      });
+    }
   });
 
   return tmp;
