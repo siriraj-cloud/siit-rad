@@ -17,17 +17,11 @@ export type LogGeneralBody = {
 };
 
 export type ServiceList =
-  | "login"
+  | "auth"
   | "siit"
-  | "eclair_cumulative"
-  | "eclair_observation"
-  | "eclair_pathology"
-  | "rad_report"
-  | "medication"
-  | "allergy"
-  | "information"
-  | "buddy_opd"
-  | "buddy_ipd"
+  | "eclair"
+  | "radiology"
+  | "buddy"
   | "med_note"
   | "appointment"
   | "vaccination"
@@ -35,4 +29,4 @@ export type ServiceList =
 
 export type ActionList = "query" | "fetch" | "cache";
 
-export type ResTypeList = "success" | "error";
+export type ResTypeList = "success" | "not_found" | "error";
