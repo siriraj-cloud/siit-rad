@@ -43,7 +43,7 @@ export async function getRadReport(
     logGeneral({
       req,
       action: "query",
-      res_type: "success",
+      res_type: "not_found",
       status_code: 404,
       hn,
       detail: "Report, not found",
