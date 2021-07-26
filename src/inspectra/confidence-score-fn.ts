@@ -1,4 +1,5 @@
 import { Op } from "sequelize";
+import { logGeneral } from "../log/log-general";
 import { ConfidenceModel } from "../pg-model/model-inspectra";
 
 type ReadAccessionNo =
@@ -12,6 +13,7 @@ type ReadAccNoProps = { anList: string[] };
 export async function readAccessionNo({
   anList,
 }: ReadAccNoProps): Promise<ReadAccessionNo> {
+  const timeStart = new Date();
   try {
     const find = await ConfidenceModel.findAll({
       attributes: ["accession_number", "accession_number_siriraj"],
@@ -23,9 +25,15 @@ export async function readAccessionNo({
       },
     });
     return { code: "OK", payload: find };
-    // return find;
   } catch (error) {
     console.error(error);
+    logGeneral({
+      action: "query",
+      res_type: "error",
+      status_code: 500,
+      detail: "Inspectra, " + (error.message || error),
+      exec_time: new Date().getTime() - timeStart.getTime(),
+    });
     return { code: "ERROR", message: error.message || JSON.stringify(error) };
   }
 }
