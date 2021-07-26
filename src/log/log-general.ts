@@ -32,7 +32,7 @@ export async function logGeneral({
   if (process.env.NODE_ENV !== "production") return;
 
   const payload: LogGeneralBody = {
-    service: "rad_report",
+    service: "radiology",
     action,
     res_type,
     status_code,
